@@ -10,56 +10,92 @@ mongoose.connect("mongodb://localhost:27017/fruitsBD", {
 
 const fruitSchema = new mongoose.Schema({
   name: String,
-  rating: Number,
+  rating: {
+    type: Number,
+    min: 1,
+    max: 10,
+  },
   review: String,
+  taste: Number,
 });
 
 const Fruit = mongoose.model("Fruit", fruitSchema);
 
 const fruit = new Fruit({
   name: "Apple",
-  rating: 7,
+  rating: 4,
   review: "Pretty solid as a fruit",
 });
 
-const kiwi = new Fruit({
-  name: "Kiwi",
-  rating: 5,
-  review: "I love kiwi",
-});
+fruit.save();
 
-const orange = new Fruit({
-  name: "orange",
-  rating: 8,
-  review: "I love orange",
-});
+// const kiwi = new Fruit({
+//   name: "Kiwi",
+//   rating: 5,
+//   review: "I love kiwi",
+// });
 
-const banana = new Fruit({
-  name: "banana",
-  rating: 10,
-  review: "I love banana",
-});
+// const orange = new Fruit({
+//   name: "orange",
+//   rating: 8,
+//   review: "I love orange",
+// });
 
-Fruit.insertMany([kiwi, orange, banana], (err) => {
-  if (err) {
-    new Error(err);
-  } else {
-    console.log("Everything is working fine");
-  }
-});
+// const banana = new Fruit({
+//   name: "banana",
+//   rating: 10,
+//   review: "I love banana",
+// });
 
-Fruit.find((err, fruits) => {
-  if (err) {
-    new Error(err);
-  } else {
-    mongoose.connection.close();
-    fruits.forEach((v) => {
-      console.log(v.name);
-    });
-  }
-});
+// Fruit.insertMany([kiwi, orange, banana], (err) => {
+//   if (err) {
+//     new Error(err);
+//   } else {
+//     console.log("Everything is working fine");
+//   }
+// });
 
-// fruit.save();
+//   Fruit.find((err, fruits) => {
+//     if (err) {
+//       new Error(err);
+//     } else {
+//       fruits.forEach((v) => {
+//         console.log(v.name);
+//       });
+//     }
+//   });
+// }
+
+/**
+ * updating
+ */
+
+// Fruit.updateOne({ _id: "613d9ef870fc2a29b0d0f884" }, { taste: "10" }, (err) => {
+//   if (err) {
+//     new Error(err);
+//   } else {
+//     mongoose.connection.close();
+//     console.log("Success");
+//   }
+// });
+
+/**
+ * deleting
+ */
+
+// Fruit.deleteMany(
+//   {
+//     age: { $gte: 5 },
+//   },
+//   (err) => {
+//     if (err) {
+//       new Error(err);
+//     } else {
+//       console.log("success");
+//     }
+//   }
+// );
+
 /**
  *  people collections
  * */
