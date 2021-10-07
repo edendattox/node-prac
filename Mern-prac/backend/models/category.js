@@ -1,5 +1,16 @@
 const mongoose = require("mongoose");
 
-const orderSchema = mongoose.Schema({});
+const categorySchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  icon: {
+    type: String,
+  },
+  color: {
+    type: String,
+  },
+});
 
-exports.Order = mongoose.model("Order", userSchema);
+exports.Category = mongoose.model("Category", categorySchema);
