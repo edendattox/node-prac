@@ -4,8 +4,9 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
 require("dotenv/config");
+const authJwt = require("./helpers/jwt");
+const errorHandler = require("./helpers/error-handler");
 
 app.use(cors());
 app.options("*", cors());
@@ -16,19 +17,21 @@ const PORT = 3000;
 const categoriesRouter = require("./routes/categories");
 const productsRouter = require("./routes/products");
 const usersRouter = require("./routes/users");
-// const ordersRouter = require("./routes/orders");
+const ordersRouter = require("./routes/orders");
 
 const api = process.env.API_URL;
 
 // middleware
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
+app.use(authJwt());
+app.use(errorHandler);
 
 // Routers
 app.use(`${api}/categories`, categoriesRouter);
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/users`, usersRouter);
-// app.use(`/${api}/orders`, ordersRouter);
+app.use(`${api}/orders`, ordersRouter);
 
 // Connecting to the database
 mongoose
